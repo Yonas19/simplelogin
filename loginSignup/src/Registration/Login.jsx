@@ -4,19 +4,29 @@ import { supabase } from "../Client";
 function Login({ change }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error,setError] = useState(null)
 
   const handleLogin = async () => {
+    e.preventDefault()
     const { data, error } = await supabase.auth.SignInWithPassword({
       email,
       password,
     });
   };
+  if (error) { setError(error.message) }
+  else {
+    
+    alert("logged in successfully!")
+    window.location.reload()
+  }
   return (
     <div>
-      <form>
+      <form onSubmit={handleLogin}>
         <div className="form-container">
           <div className="title-container">
             <h2 className="title-name">Login</h2>
+            {error && <p style={{ color: "red" }}>{error}</p>}
+
             <div className="input-container">
               <input
                 type="text"
@@ -30,7 +40,7 @@ function Login({ change }) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <button>Login</button>
+              <button type="submit">Login</button>
               <p onClick={change}>Don't have account</p>
             </div>
           </div>
