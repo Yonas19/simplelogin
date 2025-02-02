@@ -6,19 +6,20 @@ function Login({ change }) {
   const [password, setPassword] = useState("");
   const [error,setError] = useState(null)
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
     e.preventDefault()
-    const { data, error } = await supabase.auth.SignInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
+    if (error) { setError(error.message) }
+    else {
+      
+      alert("logged in successfully!")
+      window.location.reload()
+    }
   };
-  if (error) { setError(error.message) }
-  else {
-    
-    alert("logged in successfully!")
-    window.location.reload()
-  }
+ 
   return (
     <div>
       <form onSubmit={handleLogin}>
