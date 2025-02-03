@@ -19,6 +19,13 @@ function Login({ change }) {
       window.location.reload()
     }
   };
+  const handleOAuthProvider = async () => {
+
+    const { error} = supabase.auth.signInWithOAuth({
+      provider: 'email'
+    })
+    if (error) setError(error.message)
+  }
  
   return (
     <div>
@@ -42,11 +49,13 @@ function Login({ change }) {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <button type="submit">Login</button>
+              <button className='loginwgoogle' onClick={handleOAuthProvider}>Login with google</button>
               <p onClick={change}>Don't have account</p>
             </div>
           </div>
         </div>
       </form>
+      
     </div>
   );
 }
