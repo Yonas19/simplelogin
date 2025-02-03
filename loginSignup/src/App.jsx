@@ -15,10 +15,23 @@ function App() {
       setUser(user)
     } 
     getUser()
-  },[])
+  }, [])
+  
+  //logout
+
+  const handleLogout = async() => {
+    await supabase.auth.signOut()
+    setUser(null)
+  }
   return (
     <div style={{ marginTop: 50 }}>
-      {signedUp ? <Login change={Change} /> : <Signup change={ Change} />}</div>
+      {user ? (
+        <div>
+          <h2>Welcome, {user.email}</h2>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
+      ) : (signedUp ? <Login change={Change} /> : <Signup change={ Change} />)}
+      </div>
   );
 }
 
